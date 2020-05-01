@@ -15,9 +15,9 @@ const Item = (props) => {
 
     useEffect(() => {
         axios
-            .get("https://randomuser.me/api/")
+            .get("https://randomuser.me/api/?results=25")
             .then((response) => {
-                console.log(response.data.results[0])
+                
                 setEmployeeImageUrl(response.data.results[0].picture.medium);
             })
             .catch((err) => {
@@ -34,10 +34,11 @@ const Item = (props) => {
                     style={styles.employeePhoto}
                 ></img>
             </div>
-            <div className="col">{props.id}</div>
-            <div className="col">{props.employee_name}</div>
-            <div className="col">{props.employee_salary}</div>
-            <div className="col">{props.employee_age}</div>
+            <div className="col">{props.name.title}</div>
+            <div className="col">{props.name.first}</div>
+            <div className="col">{props.name.last}</div>
+            <div className="col">{props.location.country}</div>
+            <div className="col">{props.dob.age}</div>
         </div>
     );
 };

@@ -8,8 +8,8 @@ const List = (props) => {
         <h1>You have {props.employees.length} employees.</h1>
       </div>
       <div>
-            {props.employees.map((employee) => (
-              <Item {...employee} key={employee.id}/>
+            {props.employees.map((employee, index) => (
+              <Item {...employee} key={index}/>
             ))}
       </div>
     </div>
