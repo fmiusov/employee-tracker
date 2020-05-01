@@ -24,7 +24,7 @@ class EmployeeDirectory extends Component {
 
     getEmployees = () => {
         axios
-            .get("https://randomuser.me/api/?results=25")
+            .get("https://randomuser.me/api/?results=25&gender=female")
             .then((response) => {
                 this.setState({
                     employees: response.data.results,
