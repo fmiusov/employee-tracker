@@ -10,14 +10,14 @@ const Item = (props) => {
     };
 
     const [employeeImageUrl, setEmployeeImageUrl] = useState(
-        "https://randomuser.me/api/portraits/med/men/69.jpg"
+        "https://randomuser.me/api/portraits/med/women/69.jpg"
     );
 
     useEffect(() => {
         axios
-            .get("https://randomuser.me/api/")
+            .get("https://randomuser.me/api/?results=25&gender=female")
             .then((response) => {
-                console.log(response.data.results[0])
+                
                 setEmployeeImageUrl(response.data.results[0].picture.medium);
             })
             .catch((err) => {
@@ -26,19 +26,21 @@ const Item = (props) => {
     }, []);
 
     return (
-        <div className="row">
-            <div className="col">
+        <tr>
+            {/* <th scope="row"></th> */}
+            <td>
                 <img
                     src={employeeImageUrl}
                     alt="Employee avatar"
                     style={styles.employeePhoto}
                 ></img>
-            </div>
-            <div className="col">{props.id}</div>
-            <div className="col">{props.employee_name}</div>
-            <div className="col">{props.employee_salary}</div>
-            <div className="col">{props.employee_age}</div>
-        </div>
+            </td>
+            <td>{props.name.title}</td>
+            <td>{props.name.first}</td>
+            <td>{props.name.last}</td>
+            <td>{props.location.country}</td>
+            <td>{props.dob.age}</td>
+        </tr>
     );
 };
 

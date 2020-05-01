@@ -4,7 +4,7 @@ const Home = () => {
     return (
         <div className="container">
             <div className="row">
-                <div class="col">
+                <div className="col">
                     <h1>Employee Tracker</h1>
                 </div>
             </div>
