@@ -10,6 +10,7 @@ class EmployeeDirectory extends Component {
     };
 
 
+
     componentDidMount() {
         this.getEmployees();
     }
@@ -21,14 +22,14 @@ class EmployeeDirectory extends Component {
         });
     };
 
-
     getEmployees = () => {
         axios
-            .get("https://randomuser.me/api/?results=25&gender=female")
+            .get("https://randomuser.me/api/?results=25&gender=female&nat=us")
             .then((response) => {
                 this.setState({
                     employees: response.data.results,
                     employeesToDisplay: response.data.results
+
                 });
             })
             .catch((err) => {
@@ -48,20 +49,31 @@ class EmployeeDirectory extends Component {
         console.log("HandleSubmit");
         console.log(this.state.searchTerm);
         const employees = [...this.state.employees];
+        console.log(employees)
         const filteredEmployees = employees.filter((employee) => {
             const regex = new RegExp(this.state.searchTerm, "gi");
-            return employee.employee_name.match(regex);
+            return employee.name.last.match(regex);
         });
         this.setState({
             employeesToDisplay: filteredEmployees,
         });
     };
 
+    handleSortASC = (event) => {
+        event.preventDefault();
+        const employees = [...this.state.employees];
+        employees.sort(function(a, b){
+            if(a.firstname < b.firstname) { return -1; }
+            if(a.firstname > b.firstname) { return 1; }
+            return 0;
+        });
+    };
+
     render() {
         return (
             <div>
-                <h1>Welcome to the employee directory.</h1>
                 <div className="container">
+                    <h1>Employee Directory</h1>
                     <div className="row">
                         <div className="col">
                             <form onSubmit={this.handleSubmit}>
@@ -81,7 +93,7 @@ class EmployeeDirectory extends Component {
                                     <div className="col-sm-2">
                                         <button type="submit" className="btn btn-primary">
                                             Submit
-                        </button>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -89,8 +101,7 @@ class EmployeeDirectory extends Component {
                                 this.state.employeesToDisplay.length && (
                                     <button
                                         className="btn btn-secondary"
-                                        onClick={this.clearFilter}
-                                    >
+                                        onClick={this.clearFilter}>
                                         Clear Filter
                                     </button>
                                 )}

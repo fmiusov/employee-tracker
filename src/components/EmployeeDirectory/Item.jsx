@@ -15,7 +15,7 @@ const Item = (props) => {
 
     useEffect(() => {
         axios
-            .get("https://randomuser.me/api/?results=25&gender=female")
+            .get("https://randomuser.me/api/?results=25&gender=female&nat=us")
             .then((response) => {
                 
                 setEmployeeImageUrl(response.data.results[0].picture.medium);
@@ -35,10 +35,9 @@ const Item = (props) => {
                     style={styles.employeePhoto}
                 ></img>
             </td>
-            <td>{props.name.title}</td>
             <td>{props.name.first}</td>
             <td>{props.name.last}</td>
-            <td>{props.location.country}</td>
+            <td>{props.location.state}</td>
             <td>{props.dob.age}</td>
         </tr>
     );
