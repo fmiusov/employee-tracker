@@ -62,12 +62,25 @@ class EmployeeDirectory extends Component {
     handleSortASC = (event) => {
         event.preventDefault();
         const employees = [...this.state.employees];
-        employees.sort(function(a, b){
-            if(a.firstname < b.firstname) { return -1; }
-            if(a.firstname > b.firstname) { return 1; }
-            return 0;
-        });
+        function compare(a,b) {
+            const lastA = a.name.last.toUpperCase();
+            const lastB = b.name.last.toUpperCase();
+
+            let comparison = 0;
+            if (lastA > lastB) {
+                comparison = 1;
+            }else if (lastA < lastB) {
+                comparison = -1;
+            }
+            return comparison;
+        } 
+        const sortedEmployees = employees.sort(compare)
+        this.setState({
+            employeesToDisplay: sortedEmployees
+        })
     };
+
+
 
     render() {
         return (
@@ -83,7 +96,7 @@ class EmployeeDirectory extends Component {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Search employees"
+                                                placeholder="Search By Last Name"
                                                 name="searchTerm"
                                                 value={this.state.searchTerm}
                                                 onChange={this.handleChange}
@@ -93,6 +106,9 @@ class EmployeeDirectory extends Component {
                                     <div className="col-sm-2">
                                         <button type="submit" className="btn btn-primary">
                                             Submit
+                                        </button>
+                                        <button onClick={this.handleSortASC} type="submit" className="btn btn-dark">
+                                            Sort By Last Name
                                         </button>
                                     </div>
                                 </div>
@@ -109,7 +125,7 @@ class EmployeeDirectory extends Component {
                     </div>
                 </div>
                 <List employees={this.state.employeesToDisplay} />
-            </div>
+            </div >
         );
     }
 }
